@@ -68,7 +68,7 @@ HTML_AttributeIsValid(id) // returns false
 
 id = HTML_CREATE("","foo")
 HTML_AttributeIsValid(id) // returns false
-// Attribute always has to have a key
+                          // Attribute always has to have a valid key
 ```
 ### Using HTML element: Access child elements
 ```
@@ -90,8 +90,6 @@ string html = HTML_ToString(element);
               <p></p>
             </div>"
 */
-
-
 ```
 ### Using HTML element: With Parsing
 
