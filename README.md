@@ -38,13 +38,11 @@ element->clearAttributes();                           // Result: <div></div>
 
 // Creating proper HTML: <input type="text" id="foo" />
 // Step:
-element->setHtmlTag("input")
-element->addAttribute("input")
-element->addAttribute("input")
+element->setHtmlTag("input");
+element->addAttribute("type","\"text\"");
+element->addAttribute("id", "\"foo\");
 element->setEmptyTag(true);
-string inputHtml = HTML_ToString(element);  // HTML_ToString does nullpointer checks
-inputHtml == element->toString();           // returns true
-                                          
+string inputHtml = HTML_ToString(element);  // HTML_ToString does additional checks                                          
 
 ```
 
@@ -77,25 +75,73 @@ HTML_AttributeIsValid(id) // returns false
 // Creating HTML elements
 HTML_Element element  = HTML_Create("div");
 element->add(HTML_Create("p"));
-element->add(HTML_Create("input"));
+element->add(HTML_Create("p"));
 
 element->hasChildren();             // Return true
 element->numberOfChildElements();   // Return 2
 element->getChildElements();        // Return std::vector<HTML_Element>
+string html = HTML_ToString(element);
+
+/*
+  Result of html string:
+  -------------------
+  html -> "<div>
+              <p></p>
+              <p></p>
+            </div>"
+*/
+
 
 ```
-
-```
-// Creating HTML elements
-HTML_Element fooEl  = HTML_Create("div");
-HTML_Element barEl = HTML_Create(fooEl);
-
-fooEl->add(barEl);
-```
-Adds barEl as a child element at fooEl
-It will look as <div
+### Using HTML element: With Parsing
 
 ```
 // Perform HTML parsing
-HTML_Element element = HTML_Parse("<p></p>")
+// HTML_Parse(htmlCode)             returns <div>htmlCode</div>
+// HTML_Parse(masterTag, htmlCode)  returns <masterTag>htmlCode</masterTag>
+
+HTML_Element element = HTML_Parse("html","\n"
+  + "<head>"
+  + "   <style>"
+  + "       p {"
+  + "           border-radius: 25px;"
+  + "           background-color: #ededed;"
+  + "       }"
+  + "   </style>"
+  + "</head>"
+  + "<body>"
+  + "   <p>Hello World!</p>"
+  + "</body>");
+string html = HTML_ToString(element);
+/*
+  Result of html string:
+  -------------------
+  html -> "
+  <html>
+    <head>
+      <style>"
+        p {
+            border-radius: 25px;
+            background-color: #ededed;
+        }
+      </style>
+    </head>"
+    <body>"
+      <p>Hello World!</p>
+    </body>
+  </html> "
+*/
+
+//  Accessing parsed HTML:
+//  --------------------------
+  
+  element->getHtmlTag();             // html
+  element->getChildElements()[0];    // head
+  element->getChildElements()[0]     // head ->
+    ->getChildElements()[0];         // style
+  element->getChildElements()[1];    // body
+  element->getChildElements()[1]     // body ->
+    ->getChildElements()[0];         // p
+  
+  
 ```
