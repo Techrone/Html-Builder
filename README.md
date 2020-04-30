@@ -1,14 +1,26 @@
 # Html-Builder
 This is a single threaded, will be updated to multi thread, HTML parser and builder in a single set. It is developed in C++ and it is cross platform. Currently it is single threaded but will be updated to become multi-threaded algorithm.
-This would be used to generate more dynamic html pages and finalizing the html content before sending it back to the client. The library makes
-use of a specific coding standard on how to access/create or handle html properties such as elements and attributes.
+This would be used to generate more dynamic html pages and finalizing the html content before sending it back to the client. The library makes use of macros which are the shortcuts of accessing the functions of the HtmlContainer class.
+
+```
+/*
+  Library Classes/Structs
+*/
+struct Property;
+class HtmlSpecialCharacter;
+class HtmlContainer;
+```
+In this library, to ease readability of the library 
 
 ## Coding Example
 
 ### Creating HTML elements
-HTML_Create can only take in the following types:
+HTML_Create is a defined macro that make use of the constructor of the HtmlContainer class
+HTML_Create can only take in the following parameters:
 * string - name of the tag
 * HTML_Element
+H
+
 ```
 // Creating HTML elements
 HTML_Element element  = HTML_Create("div");
